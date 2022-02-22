@@ -1,39 +1,16 @@
-
 import arcade
 import arcade.gui
-
-class QuitButton(arcade.gui.UIFlatButton):
-    def on_click(self, event: arcade.gui.UIOnClickEvent):
-        arcade.exit()
+import json
 
 
-
-class TrainGame(arcade.Window):
+class GameView(arcade.View):
     def __init__(self):
-        super().__init__(1280, 720, 'Train Game', resizable=True)
-        self.set_location(400, 200)
-        arcade.set_background_color(arcade.color.TOPAZ)
-
-        # self.ground_list = None
-
-        self.setup()
-
-    def setup(self):
-
-        # my_map = arcade.load_tilemap("venv/map/Locomotive_game_map.tmx")
-        #
-        # self.ground_list = arcade.generate_sprites(my_map, "Top Layer", 1)
-
-    def on_draw(self):
-            self.clear()
-            self.manager.draw()
-            self.ground_list.draw()
-
-    def on_update(self, delta_time):
-        pass
+        super().__init__()
 
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
+
+        arcade.set_background_color(arcade.color.TOPAZ)
 
         self.v_box = arcade.gui.UIBoxLayout()
 
@@ -49,7 +26,6 @@ class TrainGame(arcade.Window):
         quit_button = QuitButton(text="Выйти из игры", width=300)
         self.v_box.add(quit_button)
 
-
         self.manager.add(
             arcade.gui.UIAnchorWidget(
                 anchor_x="center_x",
@@ -58,18 +34,30 @@ class TrainGame(arcade.Window):
         )
 
 
-
     def on_draw(self):
         self.clear()
         self.manager.draw()
-        self.ground_list.draw()
+
+class QuitButton(arcade.gui.UIFlatButton):
+    def on_click(self, event: arcade.gui.UIOnClickEvent):
+        arcade.exit()
+
+class TrainGame(arcade.Window):
+    def __init__(self):
+        super().__init__(1280, 720, 'Train Game', resizable=True)
+        self.set_location(400, 200)
+        arcade.set_background_color(arcade.color.TOPAZ)
 
 
     def on_update(self, delta_time):
         pass
 
 
-window = TrainGame()
-arcade.run()
+def main():
+    window = arcade.Window()
+    start_view = GameView()
+    window.show_view(start_view)
+    arcade.run()
 
-
+if __name__ == "__main__":
+    main()
