@@ -6,11 +6,31 @@ class QuitButton(arcade.gui.UIFlatButton):
     def on_click(self, event: arcade.gui.UIOnClickEvent):
         arcade.exit()
 
+
+
 class TrainGame(arcade.Window):
     def __init__(self):
         super().__init__(1280, 720, 'Train Game', resizable=True)
         self.set_location(400, 200)
         arcade.set_background_color(arcade.color.TOPAZ)
+
+        # self.ground_list = None
+
+        self.setup()
+
+    def setup(self):
+
+        # my_map = arcade.load_tilemap("venv/map/Locomotive_game_map.tmx")
+        #
+        # self.ground_list = arcade.generate_sprites(my_map, "Top Layer", 1)
+
+    def on_draw(self):
+            self.clear()
+            self.manager.draw()
+            self.ground_list.draw()
+
+    def on_update(self, delta_time):
+        pass
 
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
@@ -29,9 +49,6 @@ class TrainGame(arcade.Window):
         quit_button = QuitButton(text="Выйти из игры", width=300)
         self.v_box.add(quit_button)
 
-        @settings_button.event("on_click")
-        def on_click_settings(event):
-            print("Settings:", event)
 
         self.manager.add(
             arcade.gui.UIAnchorWidget(
@@ -41,13 +58,16 @@ class TrainGame(arcade.Window):
         )
 
 
+
     def on_draw(self):
         self.clear()
         self.manager.draw()
+        self.ground_list.draw()
 
 
     def on_update(self, delta_time):
         pass
+
 
 window = TrainGame()
 arcade.run()
